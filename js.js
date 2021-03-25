@@ -26,8 +26,10 @@
       mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
    
        let data1=  await  Load(latitude,longitude);
-       firebase.database().ref("Location/Local").update({"Nước": data1.data[0].country,
-       "Quận": data1.data[0].county,
+      await   firebase.database().ref("Location/Local/").update({
+        'SLT':Math.random(),
+        "Nước": data1.data[0].country,
+       "Quận": data1.data[0].county ,
        'City':data1.data[0].region});
   
     }
@@ -74,4 +76,11 @@
     html += "<br>"
 
     document.getElementById("messages").innerHTML = html;
+  });
+
+  firebase.database().ref("Location").on("child_changed", function(snapshot){
+        let location = document.getElementById("location");
+        location.innerHTML+=`<p>${snapshot.val().Quận}   ${snapshot.val().City}  ${snapshot.val().Nước} </p>`
+    console.log("day ne"+snapshot.val().City);
+
   });
