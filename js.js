@@ -28,10 +28,22 @@
        let data1=  await  Load(latitude,longitude);
       await   firebase.database().ref("Location/Local/").update({
         'SLT':Math.random(),
-        "Nước": data1.data[0].country,
-       "Quận": data1.data[0].county ,
+        "Nuoc": data1.data[0].country,
+       "Quan": data1.data[0].county ,
        'City':data1.data[0].region});
-  
+      await  fetch("https://weatherbit-v1-mashape.p.rapidapi.com/current?lon=38.5&lat=-78.5", {
+        "method": "GET",
+        "headers": {
+          "x-rapidapi-key": "d186b0ea4amsh6accb2de26f6e0dp13729cjsnbf9277f82cf9",
+          "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com"
+        }
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     }
   
     function error() {
@@ -71,7 +83,7 @@
     html += "<li id='message-" + snapshot.data + "' style='width:50%; background-color: #AFB3B9;color:white;border: 1px solid black; border-radius: 5px;'>";
     }
     // show delete button if message is sent by me
-    html += snapshot.val().data + ": " + snapshot.val().data;
+    html += snapshot.val().hour + "h : " + snapshot.val().minute+"m : "+snapshot.val().second;
     html += "</li>";
     html += "<br>"
 
@@ -80,7 +92,7 @@
 
   firebase.database().ref("Location").on("child_changed", function(snapshot){
         let location = document.getElementById("location");
-        location.innerHTML+=`<p>${snapshot.val().Quận}   ${snapshot.val().City}  ${snapshot.val().Nước} </p>`
+        location.innerHTML+=`<p>${snapshot.val().Quan} ,  ${snapshot.val().City} , ${snapshot.val().Nuoc} </p>`
     console.log("day ne"+snapshot.val().City);
 
   });
