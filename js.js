@@ -8,6 +8,30 @@
    return data;
 
 }
+const Load3 = async (lati,longti)=>{
+  let data;
+  await  fetch(`https://api.ipgeolocation.io/timezone?apiKey=1bf64be4ca514f6496ef027f00df0e20&lat=${lati}&long=${longti}`).then(response => response.json()).then (users =>{
+      data=users;
+      
+   } );
+   console.log(data);
+  return data;
+}
+const Load1 = async (lati,longi)=>{
+  let data;
+  await   fetch(`https://api.ambeedata.com/weather/forecast/by-lat-lng?lat=${lati}&lng=${longi}&filter=%7Bhourly%7Cminutely%7Cdaily%7D`, {
+    "method": "GET",
+    "headers": {
+      "x-api-key": "1pQmXyh82v6wg08JDOZ019yQTKfne5aOBV87axYh",
+      "Content-type": "application/json"
+    }
+  })
+  .then(response =>response.json()).then(users =>{
+      data=users;
+  })
+  
+  return data;
+}
  function  geoFindMe() {
     
     
@@ -26,24 +50,16 @@
       mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
    
        let data1=  await  Load(latitude,longitude);
+      //  let dataWe =await  Load1(latitude,longitude);
+       let dataTimeZone = await Load3(latitude,longitude);
       await   firebase.database().ref("Location/Local/").update({
         'SLT':Math.random(),
         "Nuoc": data1.data[0].country,
        "Quan": data1.data[0].county ,
        'City':data1.data[0].region});
-      await  fetch("https://weatherbit-v1-mashape.p.rapidapi.com/current?lon=38.5&lat=-78.5", {
-        "method": "GET",
-        "headers": {
-          "x-rapidapi-key": "d186b0ea4amsh6accb2de26f6e0dp13729cjsnbf9277f82cf9",
-          "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com"
-        }
-      })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+     
+       console.log(dataWe);
+       console.log(dataTimeZone.timezone +" "+dataTimeZone.time_24);
     }
   
     function error() {
@@ -66,7 +82,7 @@
   
   {
       var Message=document.getElementById("message").value;
-      firebase.database().ref("Sensor/data/").update({data2:parseInt(Message)})
+      firebase.database().ref("Message/data").update({Message:Message})
       document.getElementById("message").value= "";
   
   }

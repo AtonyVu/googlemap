@@ -1,0 +1,35 @@
+body {
+  background-image: url("https://image.freepik.com/free-photo/decorative-alarm-clock-with-blue-background_23-2147609624.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 90%;
+  height: 90%;
+}
+
+.Container {
+  border: 3px solid black;
+  width: 500px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+  background: rgb(97, 169, 214);
+  box-shadow: 5px 5px black;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.content {
+  width: 500px;
+  height: 150px;
+  border: 2px solid black;
+  border-radius: 70px;
+  background: rgb(94, 232, 205);
+  box-shadow: 3px 5px black;
+  text-align: center;
+  padding-top: 100px;
+  margin-top: 20px;
+}
+input {
+  border-radius: 20px;
+  height: 30px;
+  width: 200px;
+}
